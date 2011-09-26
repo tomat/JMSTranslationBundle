@@ -1,0 +1,23 @@
+{% extends "JMSTranslationBundle::base.html.twig" %}
+
+{% block body %}
+    <h2>Translation Messages for Profile "{{ token }}"</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Translation Message</th>
+                <th>Additional Information</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, trans in translations %}
+            <tr>
+                <td><abbr title="{{ id }}">{{ id|truncate(20) }}</abbr></td>
+                <td>{{ trans }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

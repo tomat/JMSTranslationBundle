@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="jms_translation.translation_data_collector" class="JMS\TranslationBundle\DataCollector\TranslationDataCollector" public="false">
+            <argument type="service" id="jms_translation.translator" />
+            <tag name="data_collector" id="jms_translation" template="JMSTranslationBundle:DataCollector:translation" />
+        </service>
+        
+        <service id="jms_translation.translator" class="JMS\TranslationBundle\Translation\TraceableTranslator" public="false">
+            <argument type="service" id="translator.default" />
+        </service>
+    </services>
+</container>

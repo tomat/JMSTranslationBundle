@@ -40,6 +40,7 @@ class Configuration implements ConfigurationInterface
             ->root('jms_translation')
                 ->fixXmlConfig('config')
                 ->children()
+                    ->booleanNode('data_collector')->defaultFalse()->end()
                     ->arrayNode('configs')
                         ->useAttributeAsKey('name')
                         ->prototype('array')

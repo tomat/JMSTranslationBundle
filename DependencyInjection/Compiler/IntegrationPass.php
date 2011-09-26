@@ -18,6 +18,7 @@
 
 namespace JMS\TranslationBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
@@ -25,6 +26,28 @@ class IntegrationPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
+        $this->integrateXliffLoader($container);
+        $this->integrateTranslator($container);
+    }
+
+    private function integrateTranslator(ContainerBuilder $container)
+    {
+        if (!$container->hasDefinition('jms_translation.translator')) {
+            return;
+        }
+
+        if (!$container->hasAlias('translator')) {
+            return;
+        }
+
+        if ('translator.default' !== (string) $container->getAlias('translator')) {
+            return;
+        }
+
+        $container->setAlias('translator', 'jms_translation.translator');
+    }
+
+    private function integrateXliffLoader(ContainerBuilder $container) {
         if (!$container->hasDefinition('translation.loader.xliff')) {
             return;
         }

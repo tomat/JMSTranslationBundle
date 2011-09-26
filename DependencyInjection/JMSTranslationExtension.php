@@ -33,6 +33,10 @@ class JMSTranslationExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
+        if ($config['data_collector']) {
+            $loader->load('data_collector.xml');
+        }
+
         $requests = array();
         foreach ($config['configs'] as $name => $extractConfig) {
             $def = new Definition('JMS\TranslationBundle\Translation\ConfigBuilder');

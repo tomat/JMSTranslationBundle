@@ -26,6 +26,9 @@ class TranslateController
     /** @DI\Inject("translation.loader") */
     private $loader;
 
+    /** @DI\Inject */
+    private $profiler;
+
     /** @DI\Inject("service_container") */
     private $container;
 
@@ -102,6 +105,23 @@ class TranslateController
             'alternativeMessages' => $alternativeMessages,
             'isWriteable' => is_writeable($files[$domain][$locale][1]),
             'file' => (string) $files[$domain][$locale][1],
+        );
+    }
+
+    /**
+     * @Route("/profile/{token}", name="jms_translation_translate_profile", options = {"i18n" = false})
+     * @Template
+     *
+     * @param string $token
+     */
+    public function translateProfileAction($token)
+    {
+        $profile = $this->profiler->loadProfile($token);
+        $translations = $profile->getCollector('jms_translation')->getTranslations();
+
+        return array(
+            'token' => $token,
+            'translations' => $translations,
         );
     }
 
