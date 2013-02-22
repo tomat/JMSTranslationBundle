@@ -115,6 +115,14 @@ class TranslateController
             $existingMessages[$id] = $message;
         }
 
+        if(count($newMessages) > 50) {
+            $newMessages = array_slice($newMessages, 0, 50, true);
+        }
+
+        if(count($existingMessages) > 50) {
+            $existingMessages = array_slice($existingMessages, 0, 50, true);
+        }
+
         return array(
             'selectedConfig' => $config,
             'configs' => $configs,
